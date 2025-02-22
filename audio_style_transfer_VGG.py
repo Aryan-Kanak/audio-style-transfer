@@ -78,8 +78,8 @@ generated_tensor = content_tensor.clone().requires_grad_(True)
 model = VGG().to(device).eval()
 
 # hyperparameters
-total_steps = 15000
-learning_rate = 0.001
+total_steps = 6000
+learning_rate = 0.1
 alpha = 1
 beta = 0.01
 optimizer = optim.Adam([generated_tensor], lr=learning_rate)

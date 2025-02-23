@@ -33,7 +33,7 @@ def extract_spectrogram(wav, sr):
     S = librosa.stft(wav, n_fft=FRAME_SIZE, hop_length=HOP_SIZE)
     Y = np.abs(S) ** 2
     Y_db = librosa.power_to_db(Y)
-    # librosa.display.specshow(Y, sr=sr, hop_length=hop_length, x_axis="time",y_axis="log")
+    # librosa.display.specshow(Y, sr=sr, hop_length=HOP_SIZE, x_axis="time",y_axis="log")
     # plt.colorbar(format="%+2.f")
 
     return Y_db
@@ -50,8 +50,8 @@ def output_tensor_to_wav(output):
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # load content and style audio here
-content_audio, sr = librosa.load("audio/moonlight-sonata-3rd-movement-snippet.wav")
-style_audio, _ = librosa.load("audio/reptilia-snippet.wav")
+content_audio, sr = librosa.load("../audio/moonlight-sonata-3rd-movement-snippet.wav")
+style_audio, _ = librosa.load("../audio/reptilia-snippet.wav")
 
 content_spec = extract_spectrogram(content_audio, sr)
 style_spec = extract_spectrogram(style_audio, sr)

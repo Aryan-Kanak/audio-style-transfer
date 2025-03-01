@@ -37,7 +37,7 @@ generated_audio = content_audio.clone().requires_grad_(True)
 model = Model().to(device).eval()
 
 # hyperparameters
-total_steps = 4000
+total_steps = 3000
 learning_rate = 0.1
 alpha = 1
 beta = 0.01

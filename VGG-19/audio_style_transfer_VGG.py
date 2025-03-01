@@ -7,7 +7,6 @@ import torch.nn as nn
 import torch.optim as optim
 import torchvision.transforms as transforms
 import torchvision.models as models
-import torchvision.transforms.functional as F
 
 # modified VGG-19 model that only outputs the feature maps
 class VGG(nn.Module):

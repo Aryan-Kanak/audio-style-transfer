@@ -1,3 +1,5 @@
+# optimize generated spectrogram
+
 import numpy as np
 import librosa
 import soundfile as sf
@@ -13,7 +15,7 @@ class Model(nn.Module):
         
         kernel_sizes = [3, 5, 7, 11, 15, 19, 23, 27]
         self.convs = nn.ModuleList([
-            nn.Conv2d(1, 64, kernel_size=k, stride=1, padding=k//2)
+            nn.Conv2d(1, 32, kernel_size=k, stride=1, padding=k//2)
             for k in kernel_sizes
         ])
         
@@ -27,7 +29,7 @@ class Model(nn.Module):
         return self.relu(out)
 
 
-COMPRESSION_FACTOR = 50
+COMPRESSION_FACTOR = 1000
 FRAME_SIZE = 512
 HOP_SIZE = 256
 
@@ -81,7 +83,7 @@ generated_tensor = content_tensor.clone().requires_grad_(True)
 model = Model().to(device).eval()
 
 # hyperparameters
-total_steps = 1
+total_steps = 1000
 learning_rate = 0.1
 alpha = 1
 beta = 0.01
@@ -97,9 +99,6 @@ for step in range(total_steps):
 
     channels, height, width = gen_features.shape
     content_loss += torch.mean((gen_features - content_features) ** 2)
-
-    # G = torch.einsum('ixy,jxy->ijx', gen_features, gen_features)
-    # A = torch.einsum('ixy,jxy->ijx', style_features, style_features)
 
     G = torch.bmm(torch.permute(gen_features, (1, 0, 2)), torch.permute(gen_features, (1, 2, 0)))
     A = torch.bmm(torch.permute(style_features, (1, 0, 2)), torch.permute(style_features, (1, 2, 0)))

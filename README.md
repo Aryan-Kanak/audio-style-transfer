@@ -1,0 +1,1 @@
+This project is an attempt to achieve neural style transfer for audio files. It was started as my final project for CS 489 - Computational Audio at the University of Waterloo but I'll likely continue to work on it. For more details, look at [report.pdf](https://github.com/Aryan-Kanak/audio-style-transfer/blob/master/report.pdf).
